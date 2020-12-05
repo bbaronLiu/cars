@@ -1,5 +1,39 @@
 <%- include("_header") -%>
 
-<h1>Welcome to our site</h1>
+<h1>Baron's Car Quiz</h1>
+<h2>Find Cars:</h2>
+
+<form>
+    <p>
+        <label for="carvin">carvin </label> <input type="number" name="carvin" id="carvin" required> <label for="carvin"> (equals)</label>
+    </p>
+    <p>
+        <label for="carmake">carmake</label> <input type="text" name="carmake" id="carmake" required> <label for="carmake"> (begins with)</label>
+    </p>
+    <p>
+        <label for="carmodel">carmodel</label> <input type="text" name="carmodel" id="carmodel" required> <label for="carmodel"> (begins with)</label>
+    </p>
+    <p>
+        <label for="carmileage">carmileage</label> <input type="number" name="carmileage" id="carmileage"> <label for="carvin"> (less than or equal to)</label>
+    </p>
+    <input type="submit" value="Find">
+    <input type="reset" value="Reset">
+</form>
+<p id="result"></p>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  document.querySelector('form').addEventListener('submit', event => {
+    event.preventDefault()
+    new FormData(document);
+    console.log(FormData)
+  })
+  
+})
+
+
+</script>
 
 <%- include("_footer") -%>
