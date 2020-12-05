@@ -4,6 +4,17 @@ const app = express();
 const multer = require("multer");
 const upload = multer();
 
+// Add packages
+require("dotenv").config();
+// Add database package and connection string
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+      rejectUnauthorized: false
+  }
+});
+
 // Setup view engine to ejs
 app.set('view engine', 'ejs');
 
@@ -105,6 +116,11 @@ app.post('/formAjax', upload.array(), (request, response) => {
     };
     //Call formPost passing message and name
     response.json(data);
+});
+
+sql = "SELECT * FROM car";
+pool.query(sql, [], (err, res) => {
+    console.log(err, res)
 });
 
 
