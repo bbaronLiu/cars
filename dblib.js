@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 const getTotalRecords = () => {
-    sql = "SELECT COUNT(*) FROM product";
+    sql = "SELECT COUNT(*) FROM car";
     return pool.query(sql)
         .then(result => {
             return {
@@ -29,38 +29,38 @@ module.exports.getTotalRecords = getTotalRecords;
 
 
 
-const findProducts = (product) => {
+const findCar = (car) => {
     // Will build query based on data provided from the form
     //  Use parameters to avoid sql injection
 
     // Declare variables
     var i = 1;
     params = [];
-    sql = "SELECT * FROM product WHERE true";
+    sql = "SELECT * FROM car WHERE true";
 
     // Check data provided and build query as necessary
-    if (product.prod_id !== "") {
-        params.push(parseInt(product.prod_id));
-        sql += ` AND prod_id = $${i}`;
+    if (car.carvin !== "") {
+        params.push(parseInt(car.carvin));
+        sql += ` AND carvin = $${i}`;
         i++;
     };
-    if (product.prod_name !== "") {
-        params.push(`${product.prod_name}%`);
-        sql += ` AND UPPER(prod_name) LIKE UPPER($${i})`;
+    if (car.carmake !== "") {
+        params.push(`${car.carmake}%`);
+        sql += ` AND UPPER(carmake) LIKE UPPER($${i})`;
         i++;
     };
-    if (product.prod_desc !== "") {
-        params.push(`${product.prod_desc}%`);
-        sql += ` AND UPPER(prod_desc) LIKE UPPER($${i})`;
+    if (car.carmodel !== "") {
+        params.push(`${car.carmodel}%`);
+        sql += ` AND UPPER(carmodel) LIKE UPPER($${i})`;
         i++;
     };
-    if (product.prod_price !== "") {
-        params.push(parseFloat(product.prod_price));
-        sql += ` AND prod_price >= $${i}`;
+    if (car.carmileage !== "") {
+        params.push(parseFloat(car.carmileage));
+        sql += ` AND carmileage <= $${i}`;
         i++;
     };
 
-    sql += ` ORDER BY prod_id`;
+    sql += ` ORDER BY carvin`;
     // for debugging
      console.log("sql: " + sql);
      console.log("params: " + params);
@@ -81,4 +81,4 @@ const findProducts = (product) => {
 };
 
 // Add towards the bottom of the page
-module.exports.findProducts = findProducts;
+module.exports.findCar = findCar;

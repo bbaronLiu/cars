@@ -30,26 +30,21 @@ app.listen(process.env.PORT || 3000, () => {
     console.log("Server started (http://localhost:3000/) !");
 });
 
-// Setup routes
-app.get("/", (req, res) => {
-    //res.send("Root resource - Up and running!")
-    res.render("index");
-});
 
-app.get("/search", async (req, res) => {
+app.get("/", async (req, res) => {
   // Omitted validation check
   const totRecs = await dblib.getTotalRecords();
-  //Create an empty product object (To populate form with values)
-  const prod = {
-      prod_id: "",
-      prod_name: "",
-      prod_desc: "",
-      prod_price: ""
+  //Create an empty car object (To populate form with values)
+  const car = {
+      carvin: "",
+      carmake: "",
+      carmodel: "",
+      carmileage: ""
   };
-  res.render("search", {
+  res.render("index", {
       type: "get",
       totRecs: totRecs.totRecords,
-      prod: prod
+      car: car
   });
 });
 
@@ -61,33 +56,33 @@ app.get("/searchajax", async (req, res) => {
   });
 });
 
-app.post("/search", async (req, res) => {
+app.post("/", async (req, res) => {
   // Omitted validation check
   //  Can get this from the page rather than using another DB call.
   //  Add it as a hidden form value.
   const totRecs = await dblib.getTotalRecords();
 
-  dblib.findProducts(req.body)
+  dblib.findCar(req.body)
       .then(result => {
-          res.render("search", {
+          res.render("index", {
               type: "post",
               totRecs: totRecs.totRecords,
               result: result,
-              prod: req.body
+              car: req.body
           })
       })
       .catch(err => {
-          res.render("search", {
+          res.render("index", {
               type: "post",
               totRecs: totRecs.totRecords,
               result: `Unexpected Error: ${err.message}`,
-              prod: req.body
+              car: req.body
           });
       });
 });
 
 app.post("/searchajax", upload.array(), async (req, res) => {
-  dblib.findProducts(req.body)
+  dblib.findCar(req.body)
       .then(result => res.send(result))
       .catch(err => res.send({trans: "Error", result: err.message}));
 

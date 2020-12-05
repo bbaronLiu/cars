@@ -1,24 +1,65 @@
 <%- include("_header") -%>
 
-<h1>Node PostgreSQL Application</h1>
+<h2> Find Cars: </h2>
+<!-- Not using bootstrap, just a simple form that you may enhance -->
+<form action="/" method="POST">
+    <table>
+        <tr>
+            <td><label for="carvin">VIN</label>:</td>
+            <td><input type="number" name="carvin" id="carvin" value="<%= car.carvin %>" /></td>
+            <td>(equal)</td>
+        </tr>
+        <tr>
+            <td><label for="carmake">Make</label>:</td>
+            <td><input type="text" name="carmake" id="carmake" value="<%= car.carmake %>" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="carmodel">Model</label>:</td>
+            <td><input type="text" name="carmodel" id="carmodel" value="<%= car.carmodel %>" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="carmileage">Mileage</label>:</td>
+            <td><input type="number" name="carmileage" id="carmileage" value="<%= car.carmileage %>" /></td>
+            <td>(less than or equal to)</td>
+        </tr>
+        <tr>
+            <td span="2">
+                <input type="submit" value="Find" />
+                <input type="reset" value="Reset" />
+            </td>
+        </tr>
+    </table>
+</form>
 
-<h2>Choose a task from the top navigation bar</h2>
+<!-- Omitted Error Checking / Needs to be added -->
+<% if (type === "post") { %>
+    <% if (result.result.length === 0) { %>
+        <h3>No records found!</h3>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>VIN</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Mileage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Array.from(result.result).forEach(car => { %> 
+                    <tr>
+                        <td><%= car.carvin %></td>
+                        <td><%= car.carmake %></td>
+                        <td><%= car.carmodel %></td>
+                        <td><%= car.carmileage %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asher's Node PostgreSQL Application</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-</head>
-<body>
-    <h1>Node PostgreSQL Application</h1>
-</body>
-</html>
+        </table>
+    <% } %>
+<% } %>
 
-
-
-
-
-<%- include("_footer") -%>
+<%- include("_footer") -%>   
