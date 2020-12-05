@@ -3,7 +3,7 @@
 <h1>Baron's Car Quiz</h1>
 <h2>Find Cars:</h2>
 
-<form>
+<form action ="/" method="POST">
     <p>
         <label for="carvin">carvin </label> <input type="number" name="carvin" id="carvin" required> <label for="carvin"> (equals)</label>
     </p>
@@ -21,19 +21,57 @@
 </form>
 <p id="result"></p>
 
+<h4>Total number of records in the database: <%= totRecs %></h4>
+
+
+
+
+
 <script>
+// document.addEventListener('DOMContentLoaded', () => {
 
-document.addEventListener('DOMContentLoaded', () => {
+ //  document.querySelector('form').addEventListener('submit', event => {
+  //  event.preventDefault()
+  //  var formData = new FormData(document.querySelector('form'));
+    
+    // This was to test multiple ways to get form data 
+    // console.log(formData.get('carvin')); , this one gets the entered carvin and prints it to console, trying to take this data and set it as a search parameter for a database query
+    
 
-  document.querySelector('form').addEventListener('submit', event => {
-    event.preventDefault()
-    new FormData(document);
-    console.log(FormData)
-  })
+//  })
   
-})
+//})
+
+//</script>
 
 
-</script>
+<!-- Omitted Error Checking / Needs to be added -->
+<% if (type === "post") { %>
+    <% if (result.result.length === 0) { %>
+        <h3>No records found!</h3>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Desc</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% result.result.forEach(car => { %> 
+                    <tr>
+                        <td><%= car.carvin %></td>
+                        <td><%= car.carmake %></td>
+                        <td><%= car.carmodel %></td>
+                        <td><%= car.carmileage %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+
+        </table>
+    <% } %>
+<% } %>
 
 <%- include("_footer") -%>
