@@ -118,10 +118,6 @@ app.post('/formAjax', upload.array(), (request, response) => {
     response.json(data);
 });
 
-sql = "SELECT * FROM car";
-pool.query(sql, [], (err, res) => {
-    console.log(err, res)
-});
 
 
 // Start listening to incoming requests
